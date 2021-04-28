@@ -122,7 +122,7 @@ namespace NamingValidator
                 EditorGUILayout.PropertyField(stringsProperty, true);
                 so.ApplyModifiedProperties();
 
-                CustomChecker.CustomNamingValidators = customNamingValidators;
+                NamingConventionValidatorDatabase.CustomNamingValidators = customNamingValidators;
             }
 
             EditorGUILayout.EndToggleGroup();
@@ -376,57 +376,46 @@ namespace NamingValidator
 
         private void Run()
         {
-            try
+            _running = true;
+
+            stopwatch = Stopwatch.StartNew();
+
+            var res = System.IO.Directory.GetFiles(Application.dataPath, "NamingConventionValidator.cs",
+                SearchOption.AllDirectories);
+            if (res.Length == 0)
             {
-                _running = true;
+                return;
+            }
 
-                stopwatch = Stopwatch.StartNew();
+            NamingConventionValidatorDatabase.FolderLocation =
+                res[0].Replace("NamingConventionValidator.cs", "").Replace("\\", "/");
 
-                var res = System.IO.Directory.GetFiles(Application.dataPath, "NamingConventionValidator.cs",
-                    SearchOption.AllDirectories);
-                if (res.Length == 0)
+            List<Object> allGOs = FindObjectsOfType<GameObject>().Cast<Object>().ToList();
+
+            if (NamingConventionValidatorDatabase.ShouldCheckFolders)
+            {
+                folderPaths.RemoveAll(x => x == string.Empty);
+
+                if (folderPaths.Count > 0)
                 {
-                    return;
-                }
-
-                NamingConventionValidatorDatabase.FolderLocation =
-                    res[0].Replace("NamingConventionValidator.cs", "").Replace("\\", "/");
-
-                List<Object> allGOs = FindObjectsOfType<GameObject>().Cast<Object>().ToList();
-
-                if (NamingConventionValidatorDatabase.ShouldCheckFolders)
-                {
-
-                    folderPaths.RemoveAll(x => x == string.Empty);
-
-                    Debug.Log(folderPaths.Count);
-
-                    if (folderPaths.Count > 0)
+                    var itemGUIDs = AssetDatabase.FindAssets("", folderPaths.ToArray());
+                    foreach (var itemGUID in itemGUIDs)
                     {
-                        var itemGUIDs = AssetDatabase.FindAssets("", folderPaths.ToArray());
-                        foreach (var itemGUID in itemGUIDs)
-                        {
-                            var assetPath = AssetDatabase.GUIDToAssetPath(itemGUID);
-                            var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
+                        var assetPath = AssetDatabase.GUIDToAssetPath(itemGUID);
+                        var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
 
-                            allGOs.Add(asset);
-                        }
+                        allGOs.Add(asset);
                     }
                 }
-
-                SpellChecker.Check(allGOs);
-                BasicChecker.Check(allGOs);
-                CustomChecker.Check(allGOs);
-                
-                _running = false;
-
-                stopwatch.Stop();
             }
-            catch (Exception e)
-            {
-                _running = false;
-                throw e;
-            }
+
+            SpellChecker.Check(allGOs);
+            BasicChecker.Check(allGOs);
+            CustomChecker.Check(allGOs);
+
+            _running = false;
+
+            stopwatch.Stop();
         }
     }
 }

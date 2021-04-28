@@ -21,7 +21,6 @@ namespace NamingValidator
 
         public static void Check(IEnumerable<Object> objects)
         {
-            NamingConventionValidatorDatabase.WordList = NamingConventionValidatorDatabase.WordList;
             TextFieldResults = new Dictionary<Object, List<string>>();
 
             if (NamingConventionValidatorDatabase.TextFieldSpellCheck)

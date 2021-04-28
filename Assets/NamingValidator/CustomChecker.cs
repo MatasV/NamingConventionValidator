@@ -1,30 +1,38 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace NamingValidator
 {
     public static class CustomChecker
     {
         public static IssueData CustomCheckerResults = new IssueData();
-        public static List<CustomNamingValidator> CustomNamingValidators = new List<CustomNamingValidator>();
-        public static Task Check(IEnumerable<Object> objects)
+
+        public static void Check(IEnumerable<Object> objects)
         {
             CustomCheckerResults = new IssueData();
             var gameObjects = objects as Object[] ?? objects.ToArray();
             if (!NamingConventionValidatorDatabase.CustomValidatorsEnabled || !gameObjects.Any() ||
-                CustomNamingValidators.Count == 0) return Task.CompletedTask;
+                NamingConventionValidatorDatabase.CustomNamingValidators.Count == 0) return;
             
             foreach (var obj in gameObjects)
             {
-                foreach (var namingValidator in CustomNamingValidators)
+                foreach (var namingValidator in NamingConventionValidatorDatabase.CustomNamingValidators)
                 {
-                    namingValidator.Evaluate(obj, CustomCheckerResults);
+                    try
+                    {
+                        namingValidator.Evaluate(obj, CustomCheckerResults);
+                    }
+                    catch (NullReferenceException e)
+                    {
+                       Debug.Log(namingValidator.name + " " + e);
+                    }
                 }
                 NamingConventionValidator.NeedCustomValidatorRedraw = true;
             }
-            return Task.CompletedTask;
         }
     }
 }

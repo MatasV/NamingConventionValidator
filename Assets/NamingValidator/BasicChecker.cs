@@ -10,8 +10,6 @@ namespace NamingValidator
 {
     public static class BasicChecker
     {
-        public static List<string> DefaultNames = new List<string>();
-
         public static Dictionary<Object, List<string>> BasicCheckResults =
             new Dictionary<Object, List<string>>();
 
@@ -76,7 +74,6 @@ namespace NamingValidator
                 Debug.LogWarning(e + ", ignoring default naming checking");
                 return false;
             }
-            return false;
         }
 
         private static bool CheckForSpacing(Object obj, List<string> issues)
