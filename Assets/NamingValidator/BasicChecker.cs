@@ -59,7 +59,7 @@ namespace NamingValidator
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Debug.Log(line);
+                    //Debug.Log(line);
                     var pattern = $@"(^{line}$)|(^{line} \([0-9][0-9]?\))";
                     if (Regex.IsMatch(name, pattern))
                     {

@@ -36,8 +36,7 @@ namespace NamingValidator
         private ReorderableList _reorderableList;
 
         public List<CustomNamingValidator> customNamingValidators;
-
-        private List<string> folderPaths = new List<string>();
+        private List<string> folderPaths = NamingConventionValidatorDatabase.FolderPaths;
         private Rect[] rects;
 
         [MenuItem("Tools/Naming Convention Validator 📃")]
@@ -397,16 +396,21 @@ namespace NamingValidator
 
                 if (NamingConventionValidatorDatabase.ShouldCheckFolders)
                 {
-                    Debug.Log("Checking Folders");
 
                     folderPaths.RemoveAll(x => x == string.Empty);
-                    var itemGUIDs = AssetDatabase.FindAssets("", folderPaths.ToArray());
-                    foreach (var itemGUID in itemGUIDs)
+
+                    Debug.Log(folderPaths.Count);
+
+                    if (folderPaths.Count > 0)
                     {
-                        var assetPath = AssetDatabase.GUIDToAssetPath(itemGUID);
-                        var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
-                        
-                        allGOs.Add(asset);
+                        var itemGUIDs = AssetDatabase.FindAssets("", folderPaths.ToArray());
+                        foreach (var itemGUID in itemGUIDs)
+                        {
+                            var assetPath = AssetDatabase.GUIDToAssetPath(itemGUID);
+                            var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
+
+                            allGOs.Add(asset);
+                        }
                     }
                 }
 

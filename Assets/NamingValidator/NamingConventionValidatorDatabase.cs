@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using WeCantSpell.Hunspell;
@@ -10,8 +12,44 @@ namespace NamingValidator
     {
         public static WordList WordList;
         public static List<string> ProfanityList = new List<string>();
-        
-        public static List<string> FolderPaths = new List<string>();
+
+        private static List<string> _folderPaths = new List<string>();
+        private static bool folderPathsInit = false;
+        public static List<string> FolderPaths
+        {
+            get
+            {
+                if (!folderPathsInit)
+                {
+                    if (File.Exists(FolderLocation + "FolderPaths.json"))
+                    {
+                        using StreamReader r =
+                            new StreamReader(FolderLocation + "FolderPaths.json");
+                        var json = r.ReadToEnd();
+                        _folderPaths = JsonConvert.DeserializeObject<List<string>>(json);
+                        folderPathsInit = true;
+                        return _folderPaths;
+                    }
+                    else
+                    {
+                        var json = JsonConvert.SerializeObject(_folderPaths);
+                        using StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json");
+                        w.Write(json);
+                        return _folderPaths;
+                    }
+                    
+                }
+                return _folderPaths;
+            }
+            set
+            {
+                _folderPaths = value;
+                
+                var json = JsonConvert.SerializeObject(_folderPaths);
+                using StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json");
+                w.Write(json);
+            }
+        }
         public static bool ShouldCheckFolders
         {
             get => EditorPrefs.HasKey("ShouldCheckFolders") && EditorPrefs.GetBool("ShouldCheckFolders");

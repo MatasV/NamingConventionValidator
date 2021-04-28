@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace NamingValidator
@@ -8,12 +9,12 @@ namespace NamingValidator
     {
         public static IssueData CustomCheckerResults = new IssueData();
         public static List<CustomNamingValidator> CustomNamingValidators = new List<CustomNamingValidator>();
-        public static void Check(IEnumerable<Object> objects)
+        public static Task Check(IEnumerable<Object> objects)
         {
             CustomCheckerResults = new IssueData();
             var gameObjects = objects as Object[] ?? objects.ToArray();
             if (!NamingConventionValidatorDatabase.CustomValidatorsEnabled || !gameObjects.Any() ||
-                CustomNamingValidators.Count == 0) return;
+                CustomNamingValidators.Count == 0) return Task.CompletedTask;
             
             foreach (var obj in gameObjects)
             {
@@ -23,6 +24,7 @@ namespace NamingValidator
                 }
                 NamingConventionValidator.NeedCustomValidatorRedraw = true;
             }
+            return Task.CompletedTask;
         }
     }
 }
