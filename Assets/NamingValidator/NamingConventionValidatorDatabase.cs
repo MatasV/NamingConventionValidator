@@ -18,12 +18,58 @@ namespace NamingValidator
 
         private static bool customValidatorsInit = false;
 
-        public static List<CustomNamingValidator> _customNamingValidators = new List<CustomNamingValidator>();
+        private static List<CustomNamingValidator> _customNamingValidators = new List<CustomNamingValidator>();
 
         public static List<CustomNamingValidator> CustomNamingValidators
         {
-            get => _customNamingValidators;
-            set => _customNamingValidators = value;
+            get
+            {
+                if (!customValidatorsInit)
+                {
+                    if (File.Exists(FolderLocation + "CustomValidatorPaths.json"))
+                    {
+                        using StreamReader r =
+                            new StreamReader(FolderLocation + "CustomValidatorPaths.json");
+                        var json = r.ReadToEnd();
+                        List<string> paths = JsonConvert.DeserializeObject<List<string>>(json);
+                        foreach (var path in paths)
+                        {
+                            var asset = AssetDatabase.LoadAssetAtPath<CustomNamingValidator>(path);
+
+                            if (asset != null)
+                            {
+                                _customNamingValidators.Add(asset);
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Custom Naming Validator at path: " + path +
+                                                 " could not be loaded, check if it still exists");
+                            }
+                        }
+
+                        customValidatorsInit = true;
+                        return _customNamingValidators;
+                    }
+                    else
+                    {
+                        var json = JsonConvert.SerializeObject(_customNamingValidators);
+                        using StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
+                        w.Write(json);
+                        customValidatorsInit = true;
+                        return _customNamingValidators;
+                    }
+                }
+                
+                return _customNamingValidators;
+            }
+            set
+            {
+                _customNamingValidators = value;
+                
+                var json = JsonConvert.SerializeObject(_customNamingValidators);
+                using StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
+                w.Write(json);
+            }
         }
 
         public static List<string> FolderPaths
@@ -46,6 +92,7 @@ namespace NamingValidator
                         var json = JsonConvert.SerializeObject(_folderPaths);
                         using StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json");
                         w.Write(json);
+                        folderPathsInit = true;
                         return _folderPaths;
                     }
                 }

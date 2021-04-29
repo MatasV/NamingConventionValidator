@@ -120,9 +120,10 @@ namespace NamingValidator
                 SerializedProperty stringsProperty = so.FindProperty("customNamingValidators");
 
                 EditorGUILayout.PropertyField(stringsProperty, true);
+
                 so.ApplyModifiedProperties();
 
-                NamingConventionValidatorDatabase.CustomNamingValidators = customNamingValidators;
+                NamingConventionValidatorDatabase.CustomNamingValidators = customNamingValidators; 
             }
 
             EditorGUILayout.EndToggleGroup();
@@ -135,6 +136,8 @@ namespace NamingValidator
             {
                 EditorGUILayout.BeginVertical();
 
+                Debug.Log(folderPaths.Count);
+                
                 if (folderPaths.Count == 0)
                 {
                     folderPaths.Add(string.Empty);
@@ -149,7 +152,6 @@ namespace NamingValidator
                 {
                     folderPaths.Add(string.Empty);
                 }
-
                 rects = new Rect[folderPaths.Count];
 
                 for (var index = 0; index < folderPaths.Count; index++)
@@ -161,11 +163,11 @@ namespace NamingValidator
                     if ((Event.current.type == EventType.DragUpdated)
                         && rects[index].Contains(Event.current.mousePosition))
                     {
+                        Debug.Log( rects.Length);
                         DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
-                        Debug.Log("Drag EXITED");
                     }
 
-                    if (Event.current.type == EventType.DragExited)
+                    if (Event.current.type == EventType.DragPerform)
                     {
                         for (var i = 0; i < rects.Length; i++)
                         {
@@ -174,6 +176,7 @@ namespace NamingValidator
                                 DragAndDrop.paths.Length > 0)
                             {
                                 folderPaths[i] = DragAndDrop.paths[0];
+                                Debug.Log(folderPaths[i]);
                             }
                         }
                     }

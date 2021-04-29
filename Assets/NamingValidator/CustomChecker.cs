@@ -31,6 +31,7 @@ namespace NamingValidator
                        Debug.Log(namingValidator.name + " " + e);
                     }
                 }
+                
                 NamingConventionValidator.NeedCustomValidatorRedraw = true;
             }
         }
