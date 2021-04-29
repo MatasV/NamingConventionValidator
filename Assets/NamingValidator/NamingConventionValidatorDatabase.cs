@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
@@ -14,10 +15,9 @@ namespace NamingValidator
         public static List<string> ProfanityList = new List<string>();
 
         private static List<string> _folderPaths = new List<string>();
-        private static bool folderPathsInit = false;
+        public static bool folderPathsInit = false;
 
-        private static bool customValidatorsInit = false;
-
+        public static bool customValidatorsInit = false;
         private static List<CustomNamingValidator> _customNamingValidators = new List<CustomNamingValidator>();
 
         public static List<CustomNamingValidator> CustomNamingValidators
@@ -26,16 +26,16 @@ namespace NamingValidator
             {
                 if (!customValidatorsInit)
                 {
+                    _customNamingValidators = new List<CustomNamingValidator>();
                     if (File.Exists(FolderLocation + "CustomValidatorPaths.json"))
                     {
                         using StreamReader r =
                             new StreamReader(FolderLocation + "CustomValidatorPaths.json");
                         var json = r.ReadToEnd();
-                        List<string> paths = JsonConvert.DeserializeObject<List<string>>(json);
+                        var paths = JsonConvert.DeserializeObject<List<string>>(json);
                         foreach (var path in paths)
                         {
                             var asset = AssetDatabase.LoadAssetAtPath<CustomNamingValidator>(path);
-
                             if (asset != null)
                             {
                                 _customNamingValidators.Add(asset);
@@ -65,10 +65,6 @@ namespace NamingValidator
             set
             {
                 _customNamingValidators = value;
-                
-                var json = JsonConvert.SerializeObject(_customNamingValidators);
-                using StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
-                w.Write(json);
             }
         }
 
@@ -78,6 +74,8 @@ namespace NamingValidator
             {
                 if (!folderPathsInit)
                 {
+                    _folderPaths = new List<string>();
+                    
                     if (File.Exists(FolderLocation + "FolderPaths.json"))
                     {
                         using StreamReader r =
@@ -99,16 +97,28 @@ namespace NamingValidator
 
                 return _folderPaths;
             }
-            set
-            {
-                _folderPaths = value;
-
-                var json = JsonConvert.SerializeObject(_folderPaths);
-                using StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json");
-                w.Write(json);
-            }
+            set => _folderPaths = value;
         }
 
+        public static void SaveStates()
+        {
+            //saving validator paths
+            Debug.Log(_customNamingValidators.Count + FolderLocation + "CustomValidatorPaths.json");
+
+            var assetLocations = (from customNamingValidator in _customNamingValidators where 
+                customNamingValidator != null select AssetDatabase.GetAssetPath(customNamingValidator)).ToList();
+
+            var valJson = JsonConvert.SerializeObject(assetLocations);
+            using StreamWriter valW = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
+            valW.Write(valJson);
+            
+            //Saving folder paths
+            Debug.Log(_folderPaths.Count + FolderLocation + "FolderPaths.json");
+            
+            var foldJson = JsonConvert.SerializeObject(_folderPaths);
+            using StreamWriter foldW = new StreamWriter(FolderLocation + "FolderPaths.json");
+            foldW.Write(foldJson);
+        }
         public static bool ShouldCheckFolders
         {
             get => EditorPrefs.HasKey("ShouldCheckFolders") && EditorPrefs.GetBool("ShouldCheckFolders");
@@ -176,6 +186,24 @@ namespace NamingValidator
             set => EditorPrefs.SetString("CapitalizationConvention", value.ToString());
         }
 
-        public static string FolderLocation { get; set; }
+        private static string _folderLocation = string.Empty;
+        public static string FolderLocation
+        {
+            get
+            {
+                if (_folderLocation == string.Empty)
+                {
+                    var res = Directory.GetFiles(Application.dataPath, "NamingConventionValidator.cs",
+                        SearchOption.AllDirectories);
+                    if (res.Length == 0)
+                    {
+                        Debug.LogWarning("Current folder not found! Features will not work properly.");
+                    }
+
+                    _folderLocation = res[0].Replace("NamingConventionValidator.cs", "").Replace("\\", "/");
+                }
+                return _folderLocation;
+            }
+        }
     }
 }

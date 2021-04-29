@@ -36,15 +36,16 @@ namespace NamingValidator
         private ReorderableList _reorderableList;
 
         public List<CustomNamingValidator> customNamingValidators;
-        private List<string> folderPaths = NamingConventionValidatorDatabase.FolderPaths;
+        private List<string> folderPaths;
         private Rect[] rects;
-
+  
         [MenuItem("Tools/Naming Convention Validator 📃")]
         static void Init()
         {
             NamingConventionValidator window =
                 (NamingConventionValidator) EditorWindow.GetWindow(typeof(NamingConventionValidator), focusedWindow,
                     "Naming Convention Validator");
+            
             window.Show();
         }
 
@@ -115,6 +116,8 @@ namespace NamingValidator
 
             if (NamingConventionValidatorDatabase.CustomValidatorsEnabled)
             {
+                customNamingValidators = NamingConventionValidatorDatabase.CustomNamingValidators;
+                
                 ScriptableObject target = this;
                 SerializedObject so = new SerializedObject(target);
                 SerializedProperty stringsProperty = so.FindProperty("customNamingValidators");
@@ -136,7 +139,7 @@ namespace NamingValidator
             {
                 EditorGUILayout.BeginVertical();
 
-                Debug.Log(folderPaths.Count);
+                folderPaths = NamingConventionValidatorDatabase.FolderPaths;
                 
                 if (folderPaths.Count == 0)
                 {
@@ -163,7 +166,6 @@ namespace NamingValidator
                     if ((Event.current.type == EventType.DragUpdated)
                         && rects[index].Contains(Event.current.mousePosition))
                     {
-                        Debug.Log( rects.Length);
                         DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
                     }
 
@@ -176,7 +178,6 @@ namespace NamingValidator
                                 DragAndDrop.paths.Length > 0)
                             {
                                 folderPaths[i] = DragAndDrop.paths[0];
-                                Debug.Log(folderPaths[i]);
                             }
                         }
                     }
@@ -383,16 +384,6 @@ namespace NamingValidator
 
             stopwatch = Stopwatch.StartNew();
 
-            var res = System.IO.Directory.GetFiles(Application.dataPath, "NamingConventionValidator.cs",
-                SearchOption.AllDirectories);
-            if (res.Length == 0)
-            {
-                return;
-            }
-
-            NamingConventionValidatorDatabase.FolderLocation =
-                res[0].Replace("NamingConventionValidator.cs", "").Replace("\\", "/");
-
             List<Object> allGOs = FindObjectsOfType<GameObject>().Cast<Object>().ToList();
 
             if (NamingConventionValidatorDatabase.ShouldCheckFolders)
@@ -419,6 +410,11 @@ namespace NamingValidator
             _running = false;
 
             stopwatch.Stop();
+        }
+
+        private void OnDestroy()
+        {
+            NamingConventionValidatorDatabase.SaveStates();
         }
     }
 }
