@@ -26,13 +26,11 @@ namespace NamingValidator
                     {
                         namingValidator.Evaluate(obj, CustomCheckerResults);
                     }
-                    catch (NullReferenceException e)
+                    catch (NullReferenceException)
                     {
-                       Debug.Log(namingValidator.name + " " + e);
+                       Debug.Log("Null Reference in Custom Validator list, please check!");
                     }
                 }
-                
-                NamingConventionValidator.NeedCustomValidatorRedraw = true;
             }
         }
     }

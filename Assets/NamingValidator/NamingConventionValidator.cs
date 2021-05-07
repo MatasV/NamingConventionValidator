@@ -13,23 +13,6 @@ namespace NamingValidator
 {
     public sealed class NamingConventionValidator : EditorWindow
     {
-        private bool _isBasicResultsFoldedOut;
-        private bool _isSpellCheckResultsFoldedOut;
-        private bool _isCustomValidatorResultsFoldedOut;
-
-        private static Vector2 _basicScrollPos;
-        private static Vector2 _spellCheckScrollPos;
-        private static Vector2 _customValidatorScrollPos;
-
-        private static readonly List<Vector2> BasicCheckScrolls = new List<Vector2>();
-        private static readonly List<Vector2> SpellCheckScrolls = new List<Vector2>();
-        private static readonly List<Vector2> CustomValidatorScrolls = new List<Vector2>();
-
-
-        public static bool NeedBasicRedraw;
-        public static bool NeedSpellCheckRedraw;
-        public static bool NeedCustomValidatorRedraw;
-
         private bool _running = false;
         private Stopwatch stopwatch;
 
@@ -38,7 +21,9 @@ namespace NamingValidator
         public List<CustomNamingValidator> customNamingValidators;
         private List<string> folderPaths;
         private Rect[] rects;
-  
+
+        public static List<Object> checkedGOs;
+        
         [MenuItem("Tools/Naming Convention Validator 📃")]
         static void Init()
         {
@@ -50,13 +35,12 @@ namespace NamingValidator
         }
 
         #region Editor Drawing
-
         private void Update()
         {
             Repaint();
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             GUILayout.Label("Basic Options", EditorStyles.whiteLargeLabel);
             EditorGUILayout.Space();
@@ -208,172 +192,6 @@ namespace NamingValidator
                         : new GUIStyleState() {textColor = Color.gray}
                 }, new[] {GUILayout.ExpandWidth(true)});
             EditorGUILayout.EndHorizontal();
-
-            if (BasicChecker.BasicCheckResults.Count > 0)
-            {
-                _isBasicResultsFoldedOut =
-                    EditorGUILayout.BeginFoldoutHeaderGroup(_isBasicResultsFoldedOut, "Basic Check Results");
-                _basicScrollPos =
-                    EditorGUILayout.BeginScrollView(_basicScrollPos,
-                        GUILayout.Width(EditorWindow.focusedWindow.position.width), GUILayout.Height(150),
-                        GUILayout.ExpandHeight(true));
-
-                GUILayout.FlexibleSpace();
-                if (_isBasicResultsFoldedOut)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    if (NeedBasicRedraw)
-                    {
-                        foreach (var _ in BasicChecker.BasicCheckResults)
-                        {
-                            BasicCheckScrolls.Add(new Vector2());
-                        }
-
-                        NeedBasicRedraw = false;
-                    }
-
-                    int scrollIndex = 0;
-
-                    foreach (var obj in BasicChecker.BasicCheckResults)
-                    {
-                        EditorGUILayout.ObjectField(obj.Key, typeof(GameObject), true, new[] {GUILayout.Width(150)});
-                        EditorGUILayout.BeginVertical();
-
-                        BasicCheckScrolls[scrollIndex] = EditorGUILayout.BeginScrollView(BasicCheckScrolls[scrollIndex],
-                            GUILayout.Width(150), GUILayout.Height(100), GUILayout.ExpandHeight(true));
-
-                        foreach (var issue in obj.Value)
-                        {
-                            EditorGUILayout.LabelField("*" + issue,
-                                new GUIStyle()
-                                {
-                                    richText = true, wordWrap = false,
-                                    normal = new GUIStyleState() {textColor = Color.white}
-                                }, GUILayout.Width(150));
-                        }
-
-                        scrollIndex++;
-                        EditorGUILayout.EndScrollView();
-                        EditorGUILayout.EndVertical();
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                EditorGUILayout.EndScrollView();
-                EditorGUILayout.EndFoldoutHeaderGroup();
-            }
-
-            if (SpellChecker.TextFieldResults.Count > 0)
-            {
-                _isSpellCheckResultsFoldedOut =
-                    EditorGUILayout.BeginFoldoutHeaderGroup(_isSpellCheckResultsFoldedOut, "Spell Check Results");
-                _spellCheckScrollPos =
-                    EditorGUILayout.BeginScrollView(_spellCheckScrollPos,
-                        GUILayout.Width(EditorWindow.focusedWindow.position.width), GUILayout.Height(150),
-                        GUILayout.ExpandHeight(true));
-
-                GUILayout.FlexibleSpace();
-                if (_isSpellCheckResultsFoldedOut)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    if (NeedSpellCheckRedraw)
-                    {
-                        foreach (var _ in SpellChecker.TextFieldResults)
-                        {
-                            SpellCheckScrolls.Add(new Vector2());
-                        }
-
-                        NeedSpellCheckRedraw = false;
-                    }
-
-                    int scrollIndex = 0;
-
-                    foreach (var obj in SpellChecker.TextFieldResults)
-                    {
-                        EditorGUILayout.ObjectField(obj.Key, typeof(GameObject), true, new[] {GUILayout.Width(150)});
-                        EditorGUILayout.BeginVertical();
-
-                        SpellCheckScrolls[scrollIndex] = EditorGUILayout.BeginScrollView(SpellCheckScrolls[scrollIndex],
-                            GUILayout.Width(150), GUILayout.Height(100), GUILayout.ExpandHeight(true));
-
-                        foreach (var issue in obj.Value)
-                        {
-                            EditorGUILayout.LabelField("*" + issue,
-                                new GUIStyle()
-                                {
-                                    richText = true, wordWrap = false,
-                                    normal = new GUIStyleState() {textColor = Color.white}
-                                }, GUILayout.Width(150));
-                        }
-
-                        scrollIndex++;
-                        EditorGUILayout.EndScrollView();
-                        EditorGUILayout.EndVertical();
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                EditorGUILayout.EndScrollView();
-                EditorGUILayout.EndFoldoutHeaderGroup();
-            }
-
-            if (CustomChecker.CustomCheckerResults.GetIssueData.Count > 0)
-            {
-                _isCustomValidatorResultsFoldedOut =
-                    EditorGUILayout.BeginFoldoutHeaderGroup(_isCustomValidatorResultsFoldedOut, "Spell Check Results");
-                _customValidatorScrollPos =
-                    EditorGUILayout.BeginScrollView(_customValidatorScrollPos,
-                        GUILayout.Width(EditorWindow.focusedWindow.position.width), GUILayout.Height(150),
-                        GUILayout.ExpandHeight(true));
-
-                GUILayout.FlexibleSpace();
-                if (_isCustomValidatorResultsFoldedOut)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    if (NeedCustomValidatorRedraw)
-                    {
-                        foreach (var _ in CustomChecker.CustomCheckerResults.GetIssueData)
-                        {
-                            CustomValidatorScrolls.Add(new Vector2());
-                        }
-
-                        NeedCustomValidatorRedraw = false;
-                    }
-
-                    int scrollIndex = 0;
-
-                    foreach (var obj in CustomChecker.CustomCheckerResults.GetIssueData)
-                    {
-                        EditorGUILayout.ObjectField(obj.Key, typeof(GameObject), true, new[] {GUILayout.Width(150)});
-                        EditorGUILayout.BeginVertical();
-
-                        CustomValidatorScrolls[scrollIndex] = EditorGUILayout.BeginScrollView(
-                            CustomValidatorScrolls[scrollIndex],
-                            GUILayout.Width(150), GUILayout.Height(100), GUILayout.ExpandHeight(true));
-
-                        foreach (var issue in obj.Value)
-                        {
-                            EditorGUILayout.LabelField("*" + issue,
-                                new GUIStyle()
-                                {
-                                    richText = true, wordWrap = false,
-                                    normal = new GUIStyleState() {textColor = Color.white}
-                                }, GUILayout.Width(150));
-                        }
-
-                        scrollIndex++;
-                        EditorGUILayout.EndScrollView();
-                        EditorGUILayout.EndVertical();
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                EditorGUILayout.EndScrollView();
-                EditorGUILayout.EndFoldoutHeaderGroup();
-            }
         }
 
         #endregion
@@ -383,7 +201,7 @@ namespace NamingValidator
             _running = true;
 
             stopwatch = Stopwatch.StartNew();
-
+            checkedGOs = new List<Object>();
             List<Object> allGOs = FindObjectsOfType<GameObject>().Cast<Object>().ToList();
 
             if (NamingConventionValidatorDatabase.ShouldCheckFolders)
@@ -403,15 +221,20 @@ namespace NamingValidator
                 }
             }
 
+            allGOs = new List<Object>(allGOs.OrderBy(x => x.name));
+
+            checkedGOs = allGOs;
+
             SpellChecker.Check(allGOs);
             BasicChecker.Check(allGOs);
             CustomChecker.Check(allGOs);
 
+            NamingConventionValidatorResultDisplay.ShowWindow();
+            
             _running = false;
 
             stopwatch.Stop();
         }
-
         private void OnDestroy()
         {
             NamingConventionValidatorDatabase.SaveStates();

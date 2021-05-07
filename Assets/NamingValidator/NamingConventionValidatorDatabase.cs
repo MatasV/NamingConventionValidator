@@ -15,12 +15,12 @@ namespace NamingValidator
         public static List<string> ProfanityList = new List<string>();
 
         private static List<string> _folderPaths = new List<string>();
-        public static bool folderPathsInit = false;
+        private static bool folderPathsInit = false;
 
-        public static bool customValidatorsInit = false;
+        private static bool customValidatorsInit = false;
         private static List<CustomNamingValidator> _customNamingValidators = new List<CustomNamingValidator>();
 
-        public static List<CustomNamingValidator> CustomNamingValidators
+         public static List<CustomNamingValidator> CustomNamingValidators
         {
             get
             {
@@ -29,21 +29,23 @@ namespace NamingValidator
                     _customNamingValidators = new List<CustomNamingValidator>();
                     if (File.Exists(FolderLocation + "CustomValidatorPaths.json"))
                     {
-                        using StreamReader r =
-                            new StreamReader(FolderLocation + "CustomValidatorPaths.json");
-                        var json = r.ReadToEnd();
-                        var paths = JsonConvert.DeserializeObject<List<string>>(json);
-                        foreach (var path in paths)
+                        using (StreamReader r =
+                            new StreamReader(FolderLocation + "CustomValidatorPaths.json"))
                         {
-                            var asset = AssetDatabase.LoadAssetAtPath<CustomNamingValidator>(path);
-                            if (asset != null)
+                            var json = r.ReadToEnd();
+                            var paths = JsonConvert.DeserializeObject<List<string>>(json);
+                            foreach (var path in paths)
                             {
-                                _customNamingValidators.Add(asset);
-                            }
-                            else
-                            {
-                                Debug.LogWarning("Custom Naming Validator at path: " + path +
-                                                 " could not be loaded, check if it still exists");
+                                var asset = AssetDatabase.LoadAssetAtPath<CustomNamingValidator>(path);
+                                if (asset != null)
+                                {
+                                    _customNamingValidators.Add(asset);
+                                }
+                                else
+                                {
+                                    Debug.LogWarning("Custom Naming Validator at path: " + path +
+                                                     " could not be loaded, check if it still exists");
+                                }
                             }
                         }
 
@@ -53,8 +55,10 @@ namespace NamingValidator
                     else
                     {
                         var json = JsonConvert.SerializeObject(_customNamingValidators);
-                        using StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
-                        w.Write(json);
+                        using (StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json"))
+                        {
+                            w.Write(json);
+                        }
                         customValidatorsInit = true;
                         return _customNamingValidators;
                     }
@@ -78,18 +82,24 @@ namespace NamingValidator
                     
                     if (File.Exists(FolderLocation + "FolderPaths.json"))
                     {
-                        using StreamReader r =
-                            new StreamReader(FolderLocation + "FolderPaths.json");
-                        var json = r.ReadToEnd();
-                        _folderPaths = JsonConvert.DeserializeObject<List<string>>(json);
+                        using (StreamReader r =
+                            new StreamReader(FolderLocation + "FolderPaths.json"))
+                        {
+                            var json = r.ReadToEnd();
+                            _folderPaths = JsonConvert.DeserializeObject<List<string>>(json);
+                        }
+                       
                         folderPathsInit = true;
                         return _folderPaths;
                     }
                     else
                     {
                         var json = JsonConvert.SerializeObject(_folderPaths);
-                        using StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json");
-                        w.Write(json);
+                        using (StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json"))
+                        { 
+                            w.Write(json);
+                        }
+                        
                         folderPathsInit = true;
                         return _folderPaths;
                     }
@@ -103,21 +113,22 @@ namespace NamingValidator
         public static void SaveStates()
         {
             //saving validator paths
-            Debug.Log(_customNamingValidators.Count + FolderLocation + "CustomValidatorPaths.json");
-
             var assetLocations = (from customNamingValidator in _customNamingValidators where 
                 customNamingValidator != null select AssetDatabase.GetAssetPath(customNamingValidator)).ToList();
 
             var valJson = JsonConvert.SerializeObject(assetLocations);
-            using StreamWriter valW = new StreamWriter(FolderLocation + "CustomValidatorPaths.json");
-            valW.Write(valJson);
+            using (StreamWriter valW = new StreamWriter(FolderLocation + "CustomValidatorPaths.json"))
+            {
+                valW.Write(valJson);
+            }
             
             //Saving folder paths
-            Debug.Log(_folderPaths.Count + FolderLocation + "FolderPaths.json");
-            
             var foldJson = JsonConvert.SerializeObject(_folderPaths);
-            using StreamWriter foldW = new StreamWriter(FolderLocation + "FolderPaths.json");
-            foldW.Write(foldJson);
+            using  (StreamWriter foldW = new StreamWriter(FolderLocation + "FolderPaths.json"))
+            {
+                foldW.Write(foldJson);
+            }
+            
         }
         public static bool ShouldCheckFolders
         {

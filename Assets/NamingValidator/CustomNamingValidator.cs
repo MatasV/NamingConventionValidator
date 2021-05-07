@@ -20,7 +20,6 @@ namespace NamingValidator
                 Debug.LogError(e);
                 throw;
             }
-           
         }
     }
 }

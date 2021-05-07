@@ -27,7 +27,6 @@ namespace NamingValidator
                 if (CheckParenthesis(objectName, foundIssues) | CheckForDefaultNaming(objectName, foundIssues) |
                     CheckForSpacing(obj, foundIssues) | CheckForCapitalisationConvention(obj, foundIssues))
                 {
-                    NamingConventionValidator.NeedBasicRedraw = true;
                     BasicCheckResults.Add(obj, foundIssues);
                 }
             }
@@ -52,21 +51,23 @@ namespace NamingValidator
             if (!NamingConventionValidatorDatabase.CheckForDefaultNames) return false;
             try
             {
-                using StreamReader sr =
-                    new StreamReader(NamingConventionValidatorDatabase.FolderLocation + @"/DefaultNames.txt");
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                using (StreamReader sr =
+                    new StreamReader(NamingConventionValidatorDatabase.FolderLocation + @"/DefaultNames.txt"))
                 {
-                    //Debug.Log(line);
-                    var pattern = $@"(^{line}$)|(^{line} \([0-9][0-9]?\))";
-                    if (Regex.IsMatch(name, pattern))
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        
-                        issues.Add("Default Name");
-                        return true;
+                        Debug.Log(name);
+
+                        var pattern = @"(^"+line+"$)|((^"+line+@") \([0-9][0-9]?\))";
+                        if (Regex.IsMatch(name, pattern))
+                        {
+                            issues.Add("Default Name");
+                            return true;
+                        }
                     }
                 }
-                
+
                 return false;
             }
             catch (Exception e)

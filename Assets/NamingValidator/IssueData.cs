@@ -5,7 +5,7 @@ namespace NamingValidator
 {
     public class IssueData
     {
-        public void AddIssue(GameObject obj, string issue)
+        public void AddIssue(Object obj, string issue)
         {
             if (obj == null || issue == string.Empty)
             {
@@ -23,6 +23,6 @@ namespace NamingValidator
             }
         }
 
-        public Dictionary<GameObject, List<string>> GetIssueData { get; } = new Dictionary<GameObject, List<string>>();
+        public Dictionary<Object, List<string>> GetIssueData { get; } = new Dictionary<Object, List<string>>();
     }
 }

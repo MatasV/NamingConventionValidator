@@ -48,11 +48,14 @@ namespace NamingValidator
                 {
                     try
                     {
-                        using StreamReader r =
-                            new StreamReader(NamingConventionValidatorDatabase.FolderLocation + "Profanity.json");
-                        var json = r.ReadToEnd();
-                        NamingConventionValidatorDatabase.ProfanityList =
-                            JsonConvert.DeserializeObject<List<string>>(json);
+                        using (StreamReader r =
+                            new StreamReader(NamingConventionValidatorDatabase.FolderLocation + "Profanity.json"))
+                        {
+
+                            var json = r.ReadToEnd();
+                            NamingConventionValidatorDatabase.ProfanityList =
+                                JsonConvert.DeserializeObject<List<string>>(json);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -92,7 +95,6 @@ namespace NamingValidator
                     if (text == string.Empty)
                     {
                         TextFieldResults.Add(textComp.gameObject, new List<string>() {"Empty Field"});
-                        NamingConventionValidator.NeedSpellCheckRedraw = true;
                         break;
                     }
 
@@ -101,7 +103,6 @@ namespace NamingValidator
                         if (!TextFieldResults.ContainsKey(textComp.gameObject))
                         {
                             TextFieldResults.Add(textComp.gameObject, new List<string>() {text});
-                            NamingConventionValidator.NeedSpellCheckRedraw = true;
                         }
                         else
                         {
@@ -121,7 +122,6 @@ namespace NamingValidator
                     if (text == string.Empty)
                     {
                         TextFieldResults.Add(textComp.gameObject, new List<string>() {"Empty Field"});
-                        NamingConventionValidator.NeedSpellCheckRedraw = true;
                         break;
                     }
 
@@ -130,7 +130,6 @@ namespace NamingValidator
                         if (!TextFieldResults.ContainsKey(textComp.gameObject))
                         {
                             TextFieldResults.Add(textComp.gameObject, new List<string>() {text});
-                            NamingConventionValidator.NeedSpellCheckRedraw = true;
                         }
                         else
                         {
@@ -171,7 +170,6 @@ namespace NamingValidator
                         if (!TextFieldResults.ContainsKey(textComp.gameObject))
                         {
                             TextFieldResults.Add(textComp.gameObject, new List<string>() {$"Profanity: {text}"});
-                            NamingConventionValidator.NeedSpellCheckRedraw = true;
                         }
                         else
                         {
@@ -194,7 +192,6 @@ namespace NamingValidator
                         if (!TextFieldResults.ContainsKey(textComp.gameObject))
                         {
                             TextFieldResults.Add(textComp.gameObject, new List<string>() {$"Profanity: {text}"});
-                            NamingConventionValidator.NeedSpellCheckRedraw = true;
                         }
                         else
                         {
