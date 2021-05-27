@@ -9,22 +9,33 @@ using WeCantSpell.Hunspell;
 
 namespace NamingValidator
 {
+    /// <summary>
+    /// The class containing the data related to the Naming Convention Validator
+    /// </summary>
     public static class NamingConventionValidatorDatabase
     {
+        /// <value>The current world list used in spell checking</value>
         public static WordList WordList;
+        /// <value>The current profanity list used in spell checking</value>
         public static List<string> ProfanityList = new List<string>();
-
+        
         private static List<string> _folderPaths = new List<string>();
-        private static bool folderPathsInit = false;
+        /// <value>Are the folder paths initialized</value>
+        private static bool _folderPathsInit = false;
 
-        private static bool customValidatorsInit = false;
+        /// <value> Is TextMeshPro present?</value>
+        public static bool IsTMPPresent = false;
+        
+        /// <value>Are the custom validators initialized</value>
+        private static bool _customValidatorsInit = false;
         private static List<CustomNamingValidator> _customNamingValidators = new List<CustomNamingValidator>();
 
-         public static List<CustomNamingValidator> CustomNamingValidators
+        /// <value>The custom validator list ist used by <see cref="CustomChecker"/></value>
+        public static List<CustomNamingValidator> CustomNamingValidators
         {
             get
             {
-                if (!customValidatorsInit)
+                if (!_customValidatorsInit)
                 {
                     _customNamingValidators = new List<CustomNamingValidator>();
                     if (File.Exists(FolderLocation + "CustomValidatorPaths.json"))
@@ -49,7 +60,7 @@ namespace NamingValidator
                             }
                         }
 
-                        customValidatorsInit = true;
+                        _customValidatorsInit = true;
                         return _customNamingValidators;
                     }
                     else
@@ -59,24 +70,21 @@ namespace NamingValidator
                         {
                             w.Write(json);
                         }
-                        customValidatorsInit = true;
+                        _customValidatorsInit = true;
                         return _customNamingValidators;
                     }
                 }
                 
                 return _customNamingValidators;
             }
-            set
-            {
-                _customNamingValidators = value;
-            }
+            set => _customNamingValidators = value;
         }
-
+        /// <value>The folder path list used in asset name checking</value>
         public static List<string> FolderPaths
         {
             get
             {
-                if (!folderPathsInit)
+                if (!_folderPathsInit)
                 {
                     _folderPaths = new List<string>();
                     
@@ -89,7 +97,7 @@ namespace NamingValidator
                             _folderPaths = JsonConvert.DeserializeObject<List<string>>(json);
                         }
                        
-                        folderPathsInit = true;
+                        _folderPathsInit = true;
                         return _folderPaths;
                     }
                     else
@@ -100,7 +108,7 @@ namespace NamingValidator
                             w.Write(json);
                         }
                         
-                        folderPathsInit = true;
+                        _folderPathsInit = true;
                         return _folderPaths;
                     }
                 }
@@ -110,6 +118,9 @@ namespace NamingValidator
             set => _folderPaths = value;
         }
 
+        /// <summary>
+        /// Method that saves the current Validators and folder paths
+        /// </summary>
         public static void SaveStates()
         {
             //saving validator paths
@@ -128,8 +139,9 @@ namespace NamingValidator
             {
                 foldW.Write(foldJson);
             }
-            
         }
+        
+        #region booleans
         public static bool ShouldCheckFolders
         {
             get => EditorPrefs.HasKey("ShouldCheckFolders") && EditorPrefs.GetBool("ShouldCheckFolders");
@@ -166,13 +178,16 @@ namespace NamingValidator
             set => EditorPrefs.SetBool("CheckForDefaultNames", value);
         }
 
+        #endregion
+        
         public enum SpacingConvention
         {
-            Allow,
-            Disallow,
-            AllowOnlyOnTopObjects
+            Allow, //Allow spaces
+            Disallow, //Disallow spaces
+            AllowOnlyOnTopObjects //Only allow spaces on top objects
         }
-
+        
+        //Current spacing convention
         public static SpacingConvention SpacingConv
         {
             get => EditorPrefs.HasKey("SpacingConvention")
@@ -183,11 +198,12 @@ namespace NamingValidator
 
         public enum CapitalizationConvention
         {
-            None,
-            CamelCase,
-            PascalCase
+            None, //Dont check
+            CamelCase, //Enforce camel case
+            PascalCase //Enforce pascal case
         }
 
+        //Current capitalization convention
         public static CapitalizationConvention CapitalizationConv
         {
             get => EditorPrefs.HasKey("CapitalizationConvention")
@@ -198,6 +214,8 @@ namespace NamingValidator
         }
 
         private static string _folderLocation = string.Empty;
+        
+        ///<value> Where are the scripts located? Used in accessing the <i>Dictionary</i>, <i>Profanity list</i>, <i>Saved folder list</i>, <i>Default name list</i></value>
         public static string FolderLocation
         {
             get

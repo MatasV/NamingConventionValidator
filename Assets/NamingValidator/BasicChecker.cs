@@ -8,13 +8,21 @@ using Object = UnityEngine.Object;
 
 namespace NamingValidator
 {
+    /// <summary>
+    /// The class responsible for basic checking
+    /// </summary>
     public static class BasicChecker
     {
+        ///<value>Results of the check</value>
         public static Dictionary<Object, List<string>> BasicCheckResults =
             new Dictionary<Object, List<string>>();
 
+        //Checking for parenthesis e.g. Gameobject (3)
         private const string ParenthesisPattern = @"\([0-9][0-9]?\)";
-        
+
+        //Default names list
+        private static List<string> defaultNames = new List<string>();
+
         public static void Check(IEnumerable<Object> objects)
         {
             BasicCheckResults = new Dictionary<Object, List<string>>();
@@ -30,44 +38,58 @@ namespace NamingValidator
                     BasicCheckResults.Add(obj, foundIssues);
                 }
             }
+
+            defaultNames.Clear();
         }
 
+        //Check for parenthesis
         private static bool CheckParenthesis(string name, List<string> issues)
         {
             if (!NamingConventionValidatorDatabase.CheckForParenthesis)
             {
                 return false;
             }
+
             if (Regex.IsMatch(name, ParenthesisPattern))
             {
                 issues.Add("Illegal Parenthesis");
                 return true;
             }
+
             return false;
         }
 
+        //Check default names
         private static bool CheckForDefaultNaming(string name, List<string> issues)
         {
             if (!NamingConventionValidatorDatabase.CheckForDefaultNames) return false;
             try
             {
-                using (StreamReader sr =
-                    new StreamReader(NamingConventionValidatorDatabase.FolderLocation + @"/DefaultNames.txt"))
+                if (defaultNames.Count == 0)
                 {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    using (StreamReader sr =
+                        new StreamReader(NamingConventionValidatorDatabase.FolderLocation + @"/DefaultNames.txt"))
                     {
-                        Debug.Log(name);
-
-                        var pattern = @"(^"+line+"$)|((^"+line+@") \([0-9][0-9]?\))";
-                        if (Regex.IsMatch(name, pattern))
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            issues.Add("Default Name");
-                            return true;
+                            line = line.Replace("(", @"\(").Replace(")", @"\)");
+                            
+                            defaultNames.Add(line);
                         }
                     }
                 }
 
+                foreach (var defaultName in defaultNames)
+                {
+                    var pattern = @"(^" + defaultName + "$)|((^" + defaultName + @") \([0-9][0-9]?\))";
+                    if (Regex.IsMatch(name, pattern))
+                    {
+                        issues.Add("Default Name");
+                        return true;
+                    }
+                }
+                
                 return false;
             }
             catch (Exception e)
@@ -77,6 +99,7 @@ namespace NamingValidator
             }
         }
 
+        //Check for spacing rules
         private static bool CheckForSpacing(Object obj, List<string> issues)
         {
             switch (NamingConventionValidatorDatabase.SpacingConv)
@@ -89,6 +112,7 @@ namespace NamingValidator
                         issues.Add("Spacing");
                         return true;
                     }
+
                     return false;
                 case NamingConventionValidatorDatabase.SpacingConvention.AllowOnlyOnTopObjects:
                     if (obj is GameObject gameObject)
@@ -109,6 +133,7 @@ namespace NamingValidator
             }
         }
 
+        //Check for capitalization
         private static bool CheckForCapitalisationConvention(Object obj, List<string> issues)
         {
             var words = obj.name.Split(' ');
@@ -117,12 +142,13 @@ namespace NamingValidator
                 case NamingConventionValidatorDatabase.CapitalizationConvention.None:
                     return false;
                 case NamingConventionValidatorDatabase.CapitalizationConvention.CamelCase:
-                    
+
                     if (words.Any(word => !char.IsLower(word[0]) && char.IsLetter(word[0])))
                     {
                         issues.Add("Wrong Capitalization");
                         return true;
                     }
+
                     return false;
                 case NamingConventionValidatorDatabase.CapitalizationConvention.PascalCase:
                     if (words.Any(word => !char.IsUpper(word[0]) && char.IsLetter(word[0])))
@@ -130,6 +156,7 @@ namespace NamingValidator
                         issues.Add("Wrong Capitalization");
                         return true;
                     }
+
                     return false;
                 default:
                     throw new ArgumentOutOfRangeException();

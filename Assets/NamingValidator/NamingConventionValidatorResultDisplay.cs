@@ -9,28 +9,31 @@ using Random = UnityEngine.Random;
 
 namespace NamingValidator
 {
+    /// <summary>
+    /// The result display window class
+    /// </summary>
     public sealed class NamingConventionValidatorResultDisplay : EditorWindow
     {
-        Vector2 scrollPos;
+        private Vector2 scrollPos;
 
-        private static NamingConventionValidatorResultDisplay window;
+        private static NamingConventionValidatorResultDisplay _window;
         
         public static void ShowWindow()
         {
-            window = GetWindow<NamingConventionValidatorResultDisplay>();
-            window.titleContent = new GUIContent("Naming Results");
-            window.Show();
+            _window = GetWindow<NamingConventionValidatorResultDisplay>();
+            _window.titleContent = new GUIContent("Naming Results");
+            _window.Show();
         }
 
-        void OnGUI()
+        public void OnGUI()
         {
             EditorGUILayout.BeginVertical();
             scrollPos =
                 EditorGUILayout.BeginScrollView(scrollPos);
             
-            if (NamingConventionValidator.checkedGOs != null && NamingConventionValidator.checkedGOs.Count > 0)
+            if (NamingConventionValidator.CheckedGOs != null && NamingConventionValidator.CheckedGOs.Count > 0)
             {
-                foreach (var obj in NamingConventionValidator.checkedGOs)
+                foreach (var obj in NamingConventionValidator.CheckedGOs)
                 {
                     if (ResultsContainObject(obj))
                     {
@@ -62,14 +65,16 @@ namespace NamingValidator
                     CustomChecker.CustomCheckerResults.GetIssueData.ContainsKey(obj));
         }
     }
-
+    /// <summary>
+    /// The issue tree view display class
+    /// </summary>
     public sealed class NamingConventionValidatorObjectResults : EditorWindow
     {
         [SerializeField] private Object displayObj;
         
-        [SerializeField] TreeViewState treeViewState;
-        
-        IssueTreeView issueTreeView;
+        [SerializeField] private TreeViewState treeViewState;
+
+        private IssueTreeView issueTreeView;
         public void ShowWindow(Object obj)
         {
             var window = GetWindow<NamingConventionValidatorObjectResults>();
@@ -90,6 +95,7 @@ namespace NamingValidator
         }
     }
     
+    //The Tree View of the issues
     public class IssueTreeView : TreeView
         {
             public IssueTreeView(TreeViewState treeViewState, Object obj)
@@ -99,7 +105,7 @@ namespace NamingValidator
                 Reload();
             }
 
-            private Object obj;
+            private readonly Object obj;
             protected override TreeViewItem BuildRoot ()
             {
                 var root = new TreeViewItem {id = 0, depth = -1, displayName = "Root"};

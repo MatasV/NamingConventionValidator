@@ -4,25 +4,27 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Compilation;
 using UnityEngine;
+using Assembly = System.Reflection.Assembly;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 using ReorderableList = UnityEditorInternal.ReorderableList;
 
 namespace NamingValidator
 {
+    /// <summary>
+    /// The main window class
+    /// </summary>
     public sealed class NamingConventionValidator : EditorWindow
     {
-        private bool _running = false;
-        private Stopwatch stopwatch;
-
-        private ReorderableList _reorderableList;
+        private bool running = false;
 
         public List<CustomNamingValidator> customNamingValidators;
         private List<string> folderPaths;
         private Rect[] rects;
 
-        public static List<Object> checkedGOs;
+        public static List<Object> CheckedGOs;
         
         [MenuItem("Tools/Naming Convention Validator 📃")]
         static void Init()
@@ -30,7 +32,7 @@ namespace NamingValidator
             NamingConventionValidator window =
                 (NamingConventionValidator) EditorWindow.GetWindow(typeof(NamingConventionValidator), focusedWindow,
                     "Naming Convention Validator");
-            
+
             window.Show();
         }
 
@@ -40,8 +42,10 @@ namespace NamingValidator
             Repaint();
         }
 
+        //Drawing
         private void OnGUI()
         {
+            //Displaying Basic Options
             GUILayout.Label("Basic Options", EditorStyles.whiteLargeLabel);
             EditorGUILayout.Space();
 
@@ -72,6 +76,7 @@ namespace NamingValidator
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.BeginVertical();
 
+            //Displaying Spell Check Options
             GUILayout.Label("Spell Check", EditorStyles.whiteLabel);
             EditorGUILayout.Space();
             NamingConventionValidatorDatabase.TextFieldSpellCheck = EditorGUILayout.ToggleLeft(new GUIContent(
@@ -94,10 +99,11 @@ namespace NamingValidator
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
 
+            //Displaying Custom Options
             NamingConventionValidatorDatabase.CustomValidatorsEnabled = EditorGUILayout.BeginToggleGroup(new GUIContent(
                 "Custom Validators Enabled",
                 "Enable custom validators"), NamingConventionValidatorDatabase.CustomValidatorsEnabled);
-
+            //Displaying the Validator List
             if (NamingConventionValidatorDatabase.CustomValidatorsEnabled)
             {
                 customNamingValidators = NamingConventionValidatorDatabase.CustomNamingValidators;
@@ -115,6 +121,7 @@ namespace NamingValidator
 
             EditorGUILayout.EndToggleGroup();
             EditorGUILayout.Space();
+            //Displaying Folders
             NamingConventionValidatorDatabase.ShouldCheckFolders = EditorGUILayout.ToggleLeft(new GUIContent(
                     "Check in Folders",
                     "Should look in folders to validate names"),
@@ -143,10 +150,9 @@ namespace NamingValidator
 
                 for (var index = 0; index < folderPaths.Count; index++)
                 {
-                    rects[index] = EditorGUILayout.GetControlRect(GUILayout.Width(300));
+                    rects[index] = EditorGUILayout.GetControlRect();
                     folderPaths[index] = EditorGUI.TextField(rects[index], folderPaths[index]);
-
-                    //If the mouse is being dragged or at the end of the drag, and the mouse position is in the text input box  
+                    
                     if ((Event.current.type == EventType.DragUpdated)
                         && rects[index].Contains(Event.current.mousePosition))
                     {
@@ -173,37 +179,33 @@ namespace NamingValidator
             }
 
             EditorGUILayout.Space();
-            EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button(_running ? "Spinning! " : "Spin It!", GUILayout.Width(500)))
+            //Run Button
+            if (GUILayout.Button(running ? "Spinning! " : "Spin It!"))
             {
                 Run();
             }
-
-            EditorGUILayout.ToggleLeft("Dictionary Loaded", SpellChecker.DictionaryLoaded, GUILayout.Width(150));
-            EditorGUILayout.ToggleLeft("Profanity Loaded", SpellChecker.ProfanityLoaded, GUILayout.Width(150));
-
-            EditorGUILayout.LabelField(_running ? "Spinning for (" + stopwatch?.Elapsed.Seconds + ")" : "Idle",
-                new GUIStyle()
-                {
-                    alignment = TextAnchor.MiddleLeft,
-                    normal = _running
-                        ? new GUIStyleState() {textColor = Color.green}
-                        : new GUIStyleState() {textColor = Color.gray}
-                }, new[] {GUILayout.ExpandWidth(true)});
+            EditorGUILayout.BeginHorizontal();
+            
+            EditorGUILayout.ToggleLeft("Dictionary Loaded", SpellChecker.DictionaryLoaded);
+            EditorGUILayout.ToggleLeft("Profanity Loaded", SpellChecker.ProfanityLoaded);
+            
             EditorGUILayout.EndHorizontal();
         }
 
         #endregion
 
+        /// <summary>
+        /// Starting the checking process
+        /// </summary>
         private void Run()
         {
-            _running = true;
-
-            stopwatch = Stopwatch.StartNew();
-            checkedGOs = new List<Object>();
+            running = true;
+            
+            //Get all objects from the current scene
+            CheckedGOs = new List<Object>();
             List<Object> allGOs = FindObjectsOfType<GameObject>().Cast<Object>().ToList();
 
+            //Get all objects from the specified folders
             if (NamingConventionValidatorDatabase.ShouldCheckFolders)
             {
                 folderPaths.RemoveAll(x => x == string.Empty);
@@ -221,19 +223,21 @@ namespace NamingValidator
                 }
             }
 
+            //Ordering objects by name
             allGOs = new List<Object>(allGOs.OrderBy(x => x.name));
 
-            checkedGOs = allGOs;
+            CheckedGOs = allGOs;
 
+            //Running the checkers
             SpellChecker.Check(allGOs);
             BasicChecker.Check(allGOs);
             CustomChecker.Check(allGOs);
 
+            //Opening the display window
             NamingConventionValidatorResultDisplay.ShowWindow();
             
-            _running = false;
-
-            stopwatch.Stop();
+            running = false;
+            
         }
         private void OnDestroy()
         {

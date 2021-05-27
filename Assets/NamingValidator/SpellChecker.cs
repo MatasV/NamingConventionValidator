@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+#if TMP_PRESENT
 using TMPro;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 using WeCantSpell.Hunspell;
@@ -11,11 +13,17 @@ using Object = UnityEngine.Object;
 
 namespace NamingValidator
 {
+    /// <summary>
+    /// The class responsible for spell checking
+    /// </summary>
     public static class SpellChecker
     {
+        //Is dictionary loaded
         public static bool DictionaryLoaded => NamingConventionValidatorDatabase.WordList != null;
+        //Is Profanity loaded
         public static bool ProfanityLoaded => NamingConventionValidatorDatabase.ProfanityList.Count > 0;
 
+        ///<value>Results of the check</value>
         public static Dictionary<Object, List<string>> TextFieldResults =
             new Dictionary<Object, List<string>>();
 
@@ -70,11 +78,14 @@ namespace NamingValidator
 
         #region textComponentChecks
 
+        //Checking text fields for spelling errors
         private static void TextFieldSpellCheck(IEnumerable<Object> objects)
         {
             var textComponents = new List<Text>();
+            #if TMP_PRESENT
             var tmpComponents = new List<TMP_Text>();
-
+            #endif
+            
             var gameObjects = objects.ToList();
             gameObjects.RemoveAll(x => !(x is GameObject));
             var castedGo = gameObjects.Cast<GameObject>();
@@ -82,9 +93,11 @@ namespace NamingValidator
             foreach (var obj in castedGo)
             {
                 textComponents.AddRange(obj.GetComponents<Text>());
-                tmpComponents.AddRange(obj.GetComponents<TMP_Text>());
+                #if TMP_PRESENT
+                tmpComponents.AddRange(obj.GetComponents<TMP_Text>());          
+                #endif
             }
-
+            //Text
             foreach (var textComp in textComponents)
             {
                 var textToCheck = new string(textComp.text.Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ');
@@ -111,7 +124,8 @@ namespace NamingValidator
                     }
                 }
             }
-
+            //TMP
+            #if TMP_PRESENT
             foreach (var textComp in tmpComponents)
             {
                 var textToCheck = new string(textComp.text.Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ');
@@ -138,15 +152,19 @@ namespace NamingValidator
                     }
                 }
             }
+            #endif
 
             return;
         }
-
+        
+        //Checking text fields for profanity
         private static void TextFieldProfanityCheck(IEnumerable<Object> objects)
         {
             var textComponents = new List<Text>();
+            #if TMP_PRESENT
             var tmpComponents = new List<TMP_Text>();
-
+            #endif
+            
             var gameObjects = objects.ToList();
             gameObjects.RemoveAll(x => !(x is GameObject));
             var castedGo = gameObjects.Cast<GameObject>();
@@ -154,9 +172,11 @@ namespace NamingValidator
             foreach (var obj in castedGo)
             {
                 textComponents.AddRange(obj.GetComponents<Text>());
+                #if TMP_PRESENT
                 tmpComponents.AddRange(obj.GetComponents<TMP_Text>());
+                #endif
             }
-
+            //Text
             foreach (var textComp in textComponents)
             {
                 var textToCheck = new string(textComp.text.Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ');
@@ -178,7 +198,8 @@ namespace NamingValidator
                     }
                 }
             }
-
+            //TMP
+            #if TMP_PRESENT
             foreach (var textComp in tmpComponents)
             {
                 var textToCheck = new string(textComp.text.Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ');
@@ -200,6 +221,7 @@ namespace NamingValidator
                     }
                 }
             }
+            #endif
         }
 
         #endregion
