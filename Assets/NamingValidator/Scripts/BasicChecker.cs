@@ -68,7 +68,7 @@ namespace NamingValidator
                 if (defaultNames.Count == 0)
                 {
                     using (StreamReader sr =
-                        new StreamReader(NamingConventionValidatorDatabase.FolderLocation + @"/DefaultNames.txt"))
+                        new StreamReader(NamingConventionValidatorDatabase.ScriptFolderLocation + @"/DefaultNames.txt"))
                     {
                         string line;
                         while ((line = sr.ReadLine()) != null)

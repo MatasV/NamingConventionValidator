@@ -1,0 +1,347 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.0f1 (c7b5465681fb) revision 13088070'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19042.985; Version 2009; 64bit' Language: 'en' Physical Memory: 6020 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.0f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/Matas/Downloads/NamingConventionValidator
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+62767
+Successfully changed project path to: C:/Users/Matas/Downloads/NamingConventionValidator
+C:/Users/Matas/Downloads/NamingConventionValidator
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 38.14 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.0f1 (c7b5465681fb)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Matas/Downloads/NamingConventionValidator/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: AMD Radeon(TM) Vega 8 Graphics (ID=0x15d8)
+    Vendor:   
+    VRAM:     3010 MB
+    Driver:   26.20.14046.3
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56000
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007189 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 39.37 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.179 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.017972 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.56 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.435 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.15 seconds
+Refreshing native plugins compatible for Editor in 0.37 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1148 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 60.4 MB.
+System memory in use after: 60.4 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 1592.
+Total: 2.843300 ms (FindLiveObjects: 0.198700 ms CreateObjectMapping: 0.036000 ms MarkObjects: 2.482500 ms  DeleteObjects: 0.123600 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0
+  artifactKey: Guid(da2907cc94d7d7849b7f840a0dbf0bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0 using Guid(da2907cc94d7d7849b7f840a0dbf0bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '529b73e2b47e56f21a45354b45a2d65f') in 0.012408 seconds
+  Import took 0.017394 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015777 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/useSharedDesignerContext.txt
+  artifactKey: Guid(345d520581294ae4c8d8bfe7084b697a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/useSharedDesignerContext.txt using Guid(345d520581294ae4c8d8bfe7084b697a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c99318f56d8ffb76efb55dfd8eeac384') in 0.061226 seconds
+  Import took 0.065354 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.023406 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1
+  artifactKey: Guid(605f2945c18a08e4dbe9f08d015949f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1 using Guid(605f2945c18a08e4dbe9f08d015949f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b08c7b5c53b7d7cad67c4e255d8b7c59') in 0.004337 seconds
+  Import took 0.007968 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.028351 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib
+  artifactKey: Guid(961db538132e73a40a5733fab0d748e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib using Guid(961db538132e73a40a5733fab0d748e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '448a053e49553aad618d66ef73d97184') in 0.003949 seconds
+  Import took 0.007766 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.018188 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/lib
+  artifactKey: Guid(780979b29a6cce0429d3d88c1d4cdcd3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/lib using Guid(780979b29a6cce0429d3d88c1d4cdcd3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d4ba011af21e5c9b61e8dc09262fbc8') in 0.008626 seconds
+  Import took 0.011977 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.024207 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/useSharedDesignerContext.txt
+  artifactKey: Guid(4ffb2e68058f3eb47aa1cdcfd4c2fa0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/useSharedDesignerContext.txt using Guid(4ffb2e68058f3eb47aa1cdcfd4c2fa0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7714cf52c48042e10228dcf815d20b1b') in 0.004739 seconds
+  Import took 0.008344 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.037355 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/THIRD-PARTY-NOTICES.TXT
+  artifactKey: Guid(c123c6dcfe852df49b34315c79dca95f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/THIRD-PARTY-NOTICES.TXT using Guid(c123c6dcfe852df49b34315c79dca95f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b6fe194497c20f254958ba238377b17') in 0.005916 seconds
+  Import took 0.008989 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.010082 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib
+  artifactKey: Guid(fcc5d9ed8e5f08e48b1481b9f1f85523) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib using Guid(fcc5d9ed8e5f08e48b1481b9f1f85523) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb04f530a0c1522dade82d27c5164009') in 0.003731 seconds
+  Import took 0.006936 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.018109 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib/netstandard2.0
+  artifactKey: Guid(05d5414a74eeab845b6f0241e56b2988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib/netstandard2.0 using Guid(05d5414a74eeab845b6f0241e56b2988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c05ca1b19cc0e0a6cd1b714a187db68e') in 0.005435 seconds
+  Import took 0.009150 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.024919 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/System.Memory.4.5.1.nupkg
+  artifactKey: Guid(79c4feca1e4f0434492bac0b8cd5c213) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/System.Memory.4.5.1.nupkg using Guid(79c4feca1e4f0434492bac0b8cd5c213) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52385d8faba38975a3ea5de5f9d5de66') in 0.012133 seconds
+  Import took 0.015118 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008304 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib/netstandard2.0/System.Buffers.xml
+  artifactKey: Guid(41b34c3540ba03847b7a1dc25af46577) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib/netstandard2.0/System.Buffers.xml using Guid(41b34c3540ba03847b7a1dc25af46577) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a8653595199e7ff7e6d0dcf00e7df61') in 0.016141 seconds
+  Import took 0.019511 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.046841 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/THIRD-PARTY-NOTICES.TXT
+  artifactKey: Guid(96789935110306b4abdf046424c9bd1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/THIRD-PARTY-NOTICES.TXT using Guid(96789935110306b4abdf046424c9bd1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2cd0a7e75a10a05a5a74905fea406dd') in 0.011909 seconds
+  Import took 0.020603 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.017418 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/version.txt
+  artifactKey: Guid(5f04070591273f149aff41b0eda4042e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/version.txt using Guid(5f04070591273f149aff41b0eda4042e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b2f6d0063473853d008c9372a5386d8') in 0.052798 seconds
+  Import took 0.060087 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.020039 seconds.
+  path: Assets/NamingValidator/Scripts/NamingConventionValidatorDatabase.cs
+  artifactKey: Guid(5d9313031d524de9b4b300b91251c4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Scripts/NamingConventionValidatorDatabase.cs using Guid(5d9313031d524de9b4b300b91251c4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdd33d9c71ddd67d87cfecf844ace37f') in 0.034894 seconds
+  Import took 0.041339 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.011867 seconds.
+  path: Assets/NamingValidator/Scripts/SpellChecker.cs
+  artifactKey: Guid(216b633633fcec74fb97f72abfeef34b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Scripts/SpellChecker.cs using Guid(216b633633fcec74fb97f72abfeef34b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e10d37b5da72d5d9a7310a92b113ba8') in 0.004917 seconds
+  Import took 0.009151 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.010926 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/System.Buffers.4.4.0.nupkg
+  artifactKey: Guid(9c3c8a565affd064096932cd92993dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/System.Buffers.4.4.0.nupkg using Guid(9c3c8a565affd064096932cd92993dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f46e398ebb41c6308034d5c77c8ad84') in 0.005311 seconds
+  Import took 0.009722 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016362 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/lib/netstandard2.0/System.Memory.xml
+  artifactKey: Guid(4f5c5ef5c1bf2db47af27bdbf0eafb84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/lib/netstandard2.0/System.Memory.xml using Guid(4f5c5ef5c1bf2db47af27bdbf0eafb84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e73b2003fed1d9aaa1cdc3b2da29846') in 0.005860 seconds
+  Import took 0.009529 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005461 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib
+  artifactKey: Guid(d5045b8ebaadad0459c92bc1ac13cbaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib using Guid(d5045b8ebaadad0459c92bc1ac13cbaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '427eb2f7dd6a3da9da6a6878710e9f5e') in 0.004143 seconds
+  Import took 0.007461 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016677 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/lib/netstandard2.0
+  artifactKey: Guid(6d524753cad66174cb30c81d273bdf29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/lib/netstandard2.0 using Guid(6d524753cad66174cb30c81d273bdf29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88ac91ca698635b52856bbe2eb3e7dcf') in 0.004586 seconds
+  Import took 0.007738 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015280 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml
+  artifactKey: Guid(d1619b247e179484b94f430fcfc1fc72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml using Guid(d1619b247e179484b94f430fcfc1fc72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36911bc32a99917c3396f58e62edc67e') in 0.006906 seconds
+  Import took 0.010644 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015522 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/LICENSE.TXT
+  artifactKey: Guid(bea90df551ea448449b47329cac16ef3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/LICENSE.TXT using Guid(bea90df551ea448449b47329cac16ef3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41c7e93ad560c2de9231cc0727d3fe88') in 0.007231 seconds
+  Import took 0.010563 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.023629 seconds.
+  path: Assets/NamingValidator/Scripts/BasicChecker.cs
+  artifactKey: Guid(b89b6fb39faa44dab1dd1c166bebe945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Scripts/BasicChecker.cs using Guid(b89b6fb39faa44dab1dd1c166bebe945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77699a421d888c475822edfc370afcb3') in 0.003841 seconds
+  Import took 0.006458 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.006137 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/version.txt
+  artifactKey: Guid(c2bd619f044a3aa44a6b0916eb1f3c92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/version.txt using Guid(c2bd619f044a3aa44a6b0916eb1f3c92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53f590be4cb89abebac0ac99226c3475') in 0.004996 seconds
+  Import took 0.008091 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008772 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/System.Runtime.CompilerServices.Unsafe.4.5.0.nupkg
+  artifactKey: Guid(cbe8d9364153a614fb678f452c267fc7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/System.Runtime.CompilerServices.Unsafe.4.5.0.nupkg using Guid(cbe8d9364153a614fb678f452c267fc7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93658fa4d9b9e013c239008c07902a26') in 0.005011 seconds
+  Import took 0.008785 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015258 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/LICENSE.TXT
+  artifactKey: Guid(80d010d1c813ada43a51ad1ecfadab30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/LICENSE.TXT using Guid(80d010d1c813ada43a51ad1ecfadab30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e04015e0331231856c8f59ed0624f56') in 0.004782 seconds
+  Import took 0.007702 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008608 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/THIRD-PARTY-NOTICES.TXT
+  artifactKey: Guid(3b19c540462c6104da4c43588d0a5054) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/THIRD-PARTY-NOTICES.TXT using Guid(3b19c540462c6104da4c43588d0a5054) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '985e4e98367e77684db9b3e88db4fa21') in 0.005006 seconds
+  Import took 0.009128 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.011894 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3
+  artifactKey: Guid(c332a512dfd5193469b87326f768966e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3 using Guid(c332a512dfd5193469b87326f768966e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f05045db9b0afc0dfde232f1aee4b90') in 0.004530 seconds
+  Import took 0.007160 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005041 seconds.
+  path: Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib/netstandard2.0
+  artifactKey: Guid(716c4793a98b03d4881482763bc08797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Buffers.4.4.0/lib/netstandard2.0 using Guid(716c4793a98b03d4881482763bc08797) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22cfa8952af4a380eb388dd5a1b0b460') in 0.003858 seconds
+  Import took 0.006898 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016116 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/Newtonsoft.Json.12.0.3.nupkg
+  artifactKey: Guid(a30c459c6f90f5f479d3f5eee8153244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/Newtonsoft.Json.12.0.3.nupkg using Guid(a30c459c6f90f5f479d3f5eee8153244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '456857aedcb2dded47dcb67e28c618ff') in 0.004611 seconds
+  Import took 0.007470 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.022939 seconds.
+  path: Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/useSharedDesignerContext.txt
+  artifactKey: Guid(cd91a3ec4f2df01469feb659582c0649) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Runtime.CompilerServices.Unsafe.4.5.0/useSharedDesignerContext.txt using Guid(cd91a3ec4f2df01469feb659582c0649) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec616294e0dafb8a72521dc98df5dde1') in 0.004263 seconds
+  Import took 0.008012 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.011956 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib/netstandard2.0/Newtonsoft.Json.xml
+  artifactKey: Guid(e424657aa3255ac4abaad66431071a1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib/netstandard2.0/Newtonsoft.Json.xml using Guid(e424657aa3255ac4abaad66431071a1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4b15236a60e617eb0fc001fe3c8153e') in 0.008719 seconds
+  Import took 0.011637 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.007372 seconds.
+  path: Assets/NamingValidator/Packages/System.Memory.4.5.1/version.txt
+  artifactKey: Guid(2f6dac11324726240a9f9405cd985464) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/System.Memory.4.5.1/version.txt using Guid(2f6dac11324726240a9f9405cd985464) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98a8bf90f9717480e29fbbdb1720cd73') in 0.004281 seconds
+  Import took 0.006987 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.075569 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib/netstandard2.0
+  artifactKey: Guid(3e10c0c69d1f59d469ebf66187e48aef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/lib/netstandard2.0 using Guid(3e10c0c69d1f59d469ebf66187e48aef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec6905acb3adad6661f4068d49a36c8e') in 0.005908 seconds
+  Import took 0.009308 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008591 seconds.
+  path: Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/LICENSE.md
+  artifactKey: Guid(74d22004554d3ab4285ae8a551ac622a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NamingValidator/Packages/Newtonsoft.Json.12.0.3/LICENSE.md using Guid(74d22004554d3ab4285ae8a551ac622a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aceafd47e9094ec941247d6f47177f32') in 0.023106 seconds
+  Import took 0.026680 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

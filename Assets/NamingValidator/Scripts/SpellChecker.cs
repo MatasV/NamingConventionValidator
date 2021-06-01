@@ -38,7 +38,7 @@ namespace NamingValidator
                     try
                     {
                         NamingConventionValidatorDatabase.WordList = WordList.CreateFromFiles(
-                            NamingConventionValidatorDatabase.FolderLocation + @"English (American).dic");
+                            NamingConventionValidatorDatabase.ScriptFolderLocation + @"English (American).dic");
                     }
                     catch (Exception e)
                     {
@@ -57,7 +57,7 @@ namespace NamingValidator
                     try
                     {
                         using (StreamReader r =
-                            new StreamReader(NamingConventionValidatorDatabase.FolderLocation + "Profanity.json"))
+                            new StreamReader(NamingConventionValidatorDatabase.ScriptFolderLocation + "Profanity.json"))
                         {
 
                             var json = r.ReadToEnd();

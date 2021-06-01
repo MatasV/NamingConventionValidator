@@ -38,10 +38,10 @@ namespace NamingValidator
                 if (!_customValidatorsInit)
                 {
                     _customNamingValidators = new List<CustomNamingValidator>();
-                    if (File.Exists(FolderLocation + "CustomValidatorPaths.json"))
+                    if (File.Exists(ScriptFolderLocation + "CustomValidatorPaths.json"))
                     {
                         using (StreamReader r =
-                            new StreamReader(FolderLocation + "CustomValidatorPaths.json"))
+                            new StreamReader(ScriptFolderLocation + "CustomValidatorPaths.json"))
                         {
                             var json = r.ReadToEnd();
                             var paths = JsonConvert.DeserializeObject<List<string>>(json);
@@ -66,7 +66,7 @@ namespace NamingValidator
                     else
                     {
                         var json = JsonConvert.SerializeObject(_customNamingValidators);
-                        using (StreamWriter w = new StreamWriter(FolderLocation + "CustomValidatorPaths.json"))
+                        using (StreamWriter w = new StreamWriter(ScriptFolderLocation + "CustomValidatorPaths.json"))
                         {
                             w.Write(json);
                         }
@@ -88,10 +88,10 @@ namespace NamingValidator
                 {
                     _folderPaths = new List<string>();
                     
-                    if (File.Exists(FolderLocation + "FolderPaths.json"))
+                    if (File.Exists(ScriptFolderLocation + "FolderPaths.json"))
                     {
                         using (StreamReader r =
-                            new StreamReader(FolderLocation + "FolderPaths.json"))
+                            new StreamReader(ScriptFolderLocation + "FolderPaths.json"))
                         {
                             var json = r.ReadToEnd();
                             _folderPaths = JsonConvert.DeserializeObject<List<string>>(json);
@@ -103,7 +103,7 @@ namespace NamingValidator
                     else
                     {
                         var json = JsonConvert.SerializeObject(_folderPaths);
-                        using (StreamWriter w = new StreamWriter(FolderLocation + "FolderPaths.json"))
+                        using (StreamWriter w = new StreamWriter(ScriptFolderLocation + "FolderPaths.json"))
                         { 
                             w.Write(json);
                         }
@@ -128,14 +128,14 @@ namespace NamingValidator
                 customNamingValidator != null select AssetDatabase.GetAssetPath(customNamingValidator)).ToList();
 
             var valJson = JsonConvert.SerializeObject(assetLocations);
-            using (StreamWriter valW = new StreamWriter(FolderLocation + "CustomValidatorPaths.json"))
+            using (StreamWriter valW = new StreamWriter(ScriptFolderLocation + "CustomValidatorPaths.json"))
             {
                 valW.Write(valJson);
             }
             
             //Saving folder paths
             var foldJson = JsonConvert.SerializeObject(_folderPaths);
-            using  (StreamWriter foldW = new StreamWriter(FolderLocation + "FolderPaths.json"))
+            using  (StreamWriter foldW = new StreamWriter(ScriptFolderLocation + "FolderPaths.json"))
             {
                 foldW.Write(foldJson);
             }
@@ -213,26 +213,27 @@ namespace NamingValidator
             set => EditorPrefs.SetString("CapitalizationConvention", value.ToString());
         }
 
-        private static string _folderLocation = string.Empty;
+        private static string _scriptFolderLocation = string.Empty;
         
         ///<value> Where are the scripts located? Used in accessing the <i>Dictionary</i>, <i>Profanity list</i>, <i>Saved folder list</i>, <i>Default name list</i></value>
-        public static string FolderLocation
+        public static string ScriptFolderLocation
         {
             get
             {
-                if (_folderLocation == string.Empty)
+                if (_scriptFolderLocation == string.Empty)
                 {
-                    var res = Directory.GetFiles(Application.dataPath, "NamingConventionValidator.cs",
+                    var res = Directory.GetFiles(Application.dataPath, "DefaultNames.txt",
                         SearchOption.AllDirectories);
                     if (res.Length == 0)
                     {
                         Debug.LogWarning("Current folder not found! Features will not work properly.");
                     }
 
-                    _folderLocation = res[0].Replace("NamingConventionValidator.cs", "").Replace("\\", "/");
+                    _scriptFolderLocation = res[0].Replace("DefaultNames.txt", "").Replace("\\", "/");
                 }
-                return _folderLocation;
+                return _scriptFolderLocation;
             }
         }
+
     }
 }
